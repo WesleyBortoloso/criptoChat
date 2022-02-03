@@ -1,15 +1,17 @@
-import GlobalStyle from "../components/GlobalStyle";
 import Title from "../components/Title";
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json'
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 
 export default function PaginaInicial() {
-  const username = 'WesleyBortoloso';
+  const [username, setUsername] = useState('');
+
+  const route = useRouter();
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -34,6 +36,10 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              route.push('/chat');
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -54,6 +60,7 @@ export default function PaginaInicial() {
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <Button
               type='submit'
